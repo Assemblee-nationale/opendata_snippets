@@ -81,34 +81,37 @@ un document XML est un arbre (il y a une "racine", unique, des "branches" et des
 
 Exemple :
 
-    ```xml
-    <racine>
-    <acteur><vide/></acteur>
-    <mandats></mandats>
-    </racine>
-    ```
+```xml
+<racine>
+<acteur><vide/></acteur>
+<mandats></mandats>
+</racine>
+```
+
 
 Mais jamais :
 
-    ```xml
-    <racine>
-    <acteur>
-      <mandats>
-      </acteur>
-    </mandats>
-    </racine>
+```xml
+<racine>
+<acteur>
+  <mandats>
+  </acteur>
+</mandats>
+</racine>
 ```
 
 
 ### élément
 Un élément est la réunion d'une balise ouvrante et fermante et de tout ce qui se trouve entre.
 Par exemple :
+
 ```xml
 <secretariat>
     <secretaire xsi:nil="true"/>
     <secretaire xsi:nil="true"/>
 </secretariat>
 ```
+    
 L'élément `secretariat` contient deux autres éléments `secretaire`
 
 ### Attribut
@@ -124,14 +127,18 @@ Ces concepts sont inutiles pour comprenndre les données de l'Open Data mais vou
 # XPath
 
 ## L'essentiel
+
 XPath est un langage de requếtage sur des documents au format XML.
 C'est à dire qu'une expression XPath appliqué à un document XML retourne entre zéro et `n` noeuds (éléments ou attributs).
 
 Une expression XPath simplement décrit le "chemin" pour accéder aux noeuds qu'elle souhaite récupérer, comme ceci :
 
-```/export/organes/organe```
+`/export/organes/organe`
+
 ou
-```./organe```
+
+`./organe`
+    
 
 Le résultat de l'expression XPath est l'ensemble des noeuds qui satisfont à l'expression.
 La façon la plus simple d'apréhender une expression XPath est de la considérer comme un 'chemin' sélectionnant les noeuds correspondant au parcours de ce chemin depuils le point d'évaluation.
@@ -148,56 +155,74 @@ Son résultat dépend donc de l'endroit du fichier XML où elle est évaluée.
 * Evaluée sur l'élément `organes` elle retourne le même résultat que l'expression précédente :les deux éléments `organe` du document exemple qui sont bien fils directs de l'élément `organes`.
 
 Mais peut-être voulez vous seulement le *premier* élément organe ?
-```/export/organes/organe[1]```
+
+`/export/organes/organe[1]`
+    
 ou le second
-```/export/organes/organe[2]```
+
+`/export/organes/organe[2]`
 
 Vous pourriez aussi vouloir récupérer **tous** les éléments `organe`, peut importe où ils sont placés dans l'arborescence :
-```//organe```
- le symbole `//` veut dire 'n'importe où en dessous', fils direct, petit fils, petit petit fils, etc ...
+
+`//organe`
+    
+le symbole `//` veut dire 'n'importe où en dessous', fils direct, petit fils, petit petit fils, etc ...
 
 ## Un peu plus et ce sera assez ...
 
 ### Selecteur
-Dans l'exemple ```/export/organes/organe[1]``` l'expression entre crochets ```[]``` est un selecteur.
+
+Dans l'exemple `/export/organes/organe[1]` l'expression entre crochets `[]` est un selecteur.
 
 Un sélecteur réduit le nombre de noeuds capturés par l'expression en posant une contrainte, un critère, un test sur les noeuds à cet endroit de l'expression.
 Un simple nombre `n` indique de sélectionner le noeud de rang `n`, mais il est possible de construire des expressions plus puissantes.
 
-```/export/organes/organe[uid="PO714518"]```
+```xml
+/export/organes/organe[uid="PO714518"]
+```
+       
 Sélectionne uniquement l'organe fils direct de ```/export/organes/``` possédant un fils `uid` de valeur "PO714518" si il existe.
 Dans notre exemple il en existe un, le second.
 
-```/export/organes/organe[.//dateDebut>"2016-01-01"]```
-Sélectionne les organes fils de  ```/export/organes/``` ayant un sous élément  `dateDebut` postérieur au 1er janvier 2016.
-Vous l'aurez remarqué l'expression de sélection est "enracinée" par défaut i.e. évaluée au point courant de l'expression, dans notre cas ```/export/organes/```, et nous pouvons utiliser la notation `//` pour sélectionner n'importe quel élément descendant `dateDebut` à partir ce ce point.
+`/export/organes/organe[.//dateDebut>"2016-01-01"]`
+    
+Sélectionne les organes fils de  `/export/organes/` ayant un sous élément  `dateDebut` postérieur au 1er janvier 2016.
+Vous l'aurez remarqué l'expression de sélection est "enracinée" par défaut i.e. évaluée au point courant de l'expression, dans notre cas `/export/organes/`, et nous pouvons utiliser la notation `//` pour sélectionner n'importe quel élément descendant `dateDebut` à partir ce ce point.
 En l'occurence l'élément date début est en fait situé en `./viMoDe/dateDebut` et nous aurious pu écrire l'expression comme ceci :
-```/export/organes/organe[./viMoDe/dateDebut > "2016-01-01"]```
+
+`/export/organes/organe[./viMoDe/dateDebut > "2016-01-01"]`
 
 L'expression 'sélecteur' peut être n'importe quelle expression XPath valide qui traduit une condition booléenne.
 
 ## Any
+
 Le symbole `*` représente n'importe quel élément.
  Ainsi l'expression :
- ```//*[uid="PO714518"]```
+ 
+`//*[uid="PO714518"]`
+     
  représente n'importe quel élément possédant un fils direct  `uid` de valeur `PO714518`
  =>un organe dans notre exemple :
- ```xml
- <organe xsi:type="OrganeParlementaire_Type">
+ 
+
+```xml
+<organe xsi:type="OrganeParlementaire_Type">
                 <uid>PO714518</uid>
                 <codeType>ASSEMBLEE</codeType>
                 ...
 </organe>
 ```
 
-    ```/*[uid="PO714518"]```
+`/*[uid="PO714518"]`
+
 représente n'importe quel élément racine possédant un fils direct `uid` de valeur `PO714518`
 => aucun dans notre exemple
 
 
-   ```//*[uid="PO714518"]```
- représente n'importe quel élément racine possédant un descendant `uid` de valeur `PO714518`
- => le document racine 'export' en entier dans notre exemple
+`//*[uid="PO714518"]`
+ 
+représente n'importe quel élément racine possédant un descendant `uid` de valeur `PO714518`
+ => le document racine 'export' en entier dans notre exemple.
 
 
 
@@ -205,15 +230,19 @@ représente n'importe quel élément racine possédant un fils direct `uid` de v
 
 Enfin, pour tester la valeur d'un attribut il faut utiliser l'opérateur `@`
 
-```//organe[@xsi:type="OrganeParlementaire_Type"]```
+`//organe[@xsi:type="OrganeParlementaire_Type"]`
+
 sélectionne tous les  organes ayant un attribut xsi:type de valeur "OrganeParlementaire_Type"
 => dans notre cas les deux éléments organes répondent à ce critère.
 
-```//*[@xsi:nil="true"]``` ...
+`//*[@xsi:nil="true"]`
+
 retournera les 4 éléments `<secretaire>` **et** deux élémens `<dateAgrement>` dans notre exemple... vous devriez comprendre pourquoi à présent ;)
 
 L'expression :
-```//secretaire[@xsi:nil="true"]```
+
+`//secretaire[@xsi:nil="true"]`
+
 ne retournerait, elle, que les 4 éléments `<secretaire>`
 
 
