@@ -12,59 +12,59 @@ Le XML se présente comme un format textuel dont voici un exemple.
 Ce fichier XML serra la base de tous nos exemples subséquents.
 
 
-<export xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <organes>
-        <organe xsi:type="OrganeParlementaire_Type">
-            <uid>PO711218</uid>
-            <codeType>MISINFO</codeType>
-            <libelle>Formation des enseignants</libelle>
-            <viMoDe>
-                <dateDebut>2015-12-16</dateDebut>
-                <dateAgrement xsi:nil="true"/>
-                <dateFin>2016-10-05</dateFin>
-            </viMoDe>
-            <legislature>14</legislature>
-            <secretariat>
-                <secretaire xsi:nil="true"/>
-                <secretaire xsi:nil="true"/>
-            </secretariat>
-        </organe>
-        <organe xsi:type="OrganeParlementaire_Type">
-            <uid>PO714518</uid>
-            <codeType>ASSEMBLEE</codeType>
-            <libelle>Assemble nationale</libelle>
-            <viMoDe>
-                <dateDebut>2016-12-16</dateDebut>
-                <dateAgrement xsi:nil="true"/>
-                <dateFin>2018-10-05</dateFin>
-            </viMoDe>
-            <legislature>14</legislature>
-            <secretariat>
-                <secretaire xsi:nil="true"/>
-                <secretaire xsi:nil="true"/>
-            </secretariat>
-        </organe>
-    </organes>
-    <acteurs>
-        <acteur>
-            <uid>PA3445</uid>
-            <etatCivil>
-                <ident>
-                    <nom>jean</nom>
-                    <prenom>valjean</prenom>
-                </ident>
-            </etatCivil>
-            <mandats>
-                <mandat>
-                    <uid>PM3455</uid>
-                    <typeorgane>Assemblee</typeorgane>
-                    <acteurRef>PA3445</acteurRef>
-                </mandat>
-            </mandats>
-        </acteur>
-    </acteurs>
-</export>
-
+> <export xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+>     <organes>
+>         <organe xsi:type="OrganeParlementaire_Type">
+>             <uid>PO711218</uid>
+>             <codeType>MISINFO</codeType>
+>             <libelle>Formation des enseignants</libelle>
+>             <viMoDe>
+>                 <dateDebut>2015-12-16</dateDebut>
+>                 <dateAgrement xsi:nil="true"/>
+>                 <dateFin>2016-10-05</dateFin>
+>             </viMoDe>
+>             <legislature>14</legislature>
+>             <secretariat>
+>                 <secretaire xsi:nil="true"/>
+>                 <secretaire xsi:nil="true"/>
+>             </secretariat>
+>         </organe>
+>         <organe xsi:type="OrganeParlementaire_Type">
+>             <uid>PO714518</uid>
+>             <codeType>ASSEMBLEE</codeType>
+>             <libelle>Assemble nationale</libelle>
+>             <viMoDe>
+>                 <dateDebut>2016-12-16</dateDebut>
+>                 <dateAgrement xsi:nil="true"/>
+>                 <dateFin>2018-10-05</dateFin>
+>             </viMoDe>
+>             <legislature>14</legislature>
+>             <secretariat>
+>                 <secretaire xsi:nil="true"/>
+>                 <secretaire xsi:nil="true"/>
+>             </secretariat>
+>         </organe>
+>     </organes>
+>     <acteurs>
+>         <acteur>
+>             <uid>PA3445</uid>
+>             <etatCivil>
+>                 <ident>
+>                     <nom>jean</nom>
+>                     <prenom>valjean</prenom>
+>                 </ident>
+>             </etatCivil>
+>             <mandats>
+>                 <mandat>
+>                     <uid>PM3455</uid>
+>                     <typeorgane>Assemblee</typeorgane>
+>                     <acteurRef>PA3445</acteurRef>
+>                 </mandat>
+>             </mandats>
+>         </acteur>
+>     </acteurs>
+> </export>
+> 
 ## L'essentiel
 
 ### Arbre
