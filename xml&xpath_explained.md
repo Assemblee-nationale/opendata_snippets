@@ -12,6 +12,7 @@ Le XML se présente comme un format textuel dont voici un exemple.
 Ce fichier XML serra la base de tous nos exemples subséquents.
 
 ```xml
+<?xml version="1.0" encoding="UTF-8"?>
 <export xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <organes>
         <organe xsi:type="OrganeParlementaire_Type">
