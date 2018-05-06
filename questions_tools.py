@@ -1,4 +1,4 @@
-from xml_tools import fragparse
+from opantools.xml_tools import fragparse
 from common_XPath import QUESTION_MININT, QUESTION_TYPE_QUESTION, QUESTION_MINATTRIB, QUESTION_NUMERO
 from file_loader import get_src_file_path, get_out_file_name
 from lxml import etree

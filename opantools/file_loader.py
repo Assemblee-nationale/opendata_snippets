@@ -12,6 +12,7 @@ import os
 
 SCRIPT_ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
 DATA_SRC_DIR = os.path.join(SCRIPT_ROOT_DIR, '..', 'data_src')
+OUT_DIR = os.path.join(SCRIPT_ROOT_DIR, '..', 'out_dir')
 
 
 def get_src_file_path(src_filename, use_sample_files=True):
@@ -29,7 +30,7 @@ def get_src_file_path(src_filename, use_sample_files=True):
 
 
 def get_out_dir(base_subdir_name=None):
-    out_dir_path = os.path.join(SCRIPT_ROOT_DIR, "out_dir", base_subdir_name)
+    out_dir_path = os.path.join(OUT_DIR, base_subdir_name)
     if not os.path.exists(out_dir_path):
         os.mkdir(out_dir_path)
     return out_dir_path

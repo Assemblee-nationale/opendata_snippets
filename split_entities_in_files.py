@@ -52,7 +52,7 @@ SCRIPT_ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
 DATA_SRC_DIR = os.path.join(SCRIPT_ROOT_DIR, 'data_src')
 
 
-def split_element_names(in_flux, out_dir, elements_names, cb_func=None, uid_xpath=None):
+def split_element_names(in_flux, out_dir, elements_names, cb_func=None, uid_xpath=None, pretty_print=False):
     """
     Cette fonction illustre la restructruration d'un flux d'entrée, par exemple "Acteur/Mandat/Organes" présentant d'un seul bloc, tous les organes,
     puis les acteurs avec leurs mandats inclus.
@@ -68,6 +68,13 @@ def split_element_names(in_flux, out_dir, elements_names, cb_func=None, uid_xpat
         uid_xpath: xpath utilisé pour calculer le nom du fichier de sortie, si uid_xpath est None il est assumé que le fragment XML est un
          élément du référentiel bien formé et donc que le premier fils de sa racine est son élément ` uid`, qui est alors utilisé pour générer le nom
          de fichier de sortie.
+        pretty_print (bool) : indique si la sortie doit ou non être "reformatée pour une lecture plus aisée (pretty print)".
+         **ceci n'est PAS neutre** dans le cas des fichier XML contenant du texte libre, du html ou du contenu "mixte" (mixed content, go google) car
+          cela introduit des sauts de lignes qui de fait modifient le contenu et la sémantique du document originel.
+          Le défaut est donc "False" pour préserver les fragments dans leur forme et structure autant que dans leur contenu, seul un découpage est
+          effectué.
+          Cependant pour de nombreux types de fichiers pour lesquels tout le contenu est dans des balises et ne contenant pas de CDATA ou autre HTML
+           (acteurs, mandats, organes, ...) ou si vous savez ce que vous faites, pretty_print = True permet d'avoir une fichier plus lisible.
 
     Returns (int): nombre de fichiers créés
 
@@ -96,7 +103,8 @@ def split_element_names(in_flux, out_dir, elements_names, cb_func=None, uid_xpat
             uid = uid_xpath(frag_xml)[0].text
         outfile_path = os.path.join(out_dir, xml_tag, uid + ".xml")
         with open(outfile_path, "w", encoding='utf-8') as out_fd:
-            out_fd.write(etree.tostring(frag_xml, encoding='unicode', pretty_print=True))
+            #
+            out_fd.write(etree.tostring(frag_xml, encoding='unicode', pretty_print=pretty_print))
     return index+1 if index else 0
 
 
@@ -114,10 +122,10 @@ if __name__ == "__main__":
     # ceci sépare les comptes rendus en autant de fichiers individuels nommé selon la "dateSeance". Mais le flux syceron est 'artistique' et ne suit
     # aucun schéma dateSeance peut devenir DateSeance ou Date_Seance ou date_seance, c'est, en gros, n'importe quoi, et en l'occurence ce n'est pas
     # une date mais un timestamp (date+heure) et donc chaque séance est uniquement identifiée par cet élément
-    process(r"SyceronBrut.xml", elements_names="CompteRendu", uid_xpath=".//dateSeance|.//DateSeance")
+    process(r"SyceronBrut.sample.xml", elements_names="CompteRendu", uid_xpath=".//dateSeance|.//DateSeance")
     # La ligne suivante extrait les "métadonnées" de chaque compte rendu de séance sous un nom correspondant à la "date" séance
-    # process(r"SyceronBrut.xml", "CompteRendu", elements_names=('Metadonnees',), uid_xpath='.//dateSeance|.//DateSeance')
-    process(r"AMO20_dep_sen_min_tous_mandats_et_organes_XIV.sample.xml", elements_names=('acteur', 'organe'))
+    # process(r"SyceronBrut.sample.xml", "CompteRendu", elements_names=('Metadonnees',), uid_xpath='.//dateSeance|.//DateSeance')
+    # process(r"AMO20_dep_sen_min_tous_mandats_et_organes_XIV.sample.xml", elements_names=('acteur', 'organe'))
     print("done processing")
 
 
