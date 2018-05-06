@@ -2,13 +2,12 @@ import heapq
 
 from opantools.common_XPath import ACTEUR_MANDATS
 from opantools.file_loader import get_src_file_path
-from opantools.ref_formater import format_acteur
+from opantools.ref_formater import format_entity
 from opantools.xml_tools import fragparse
-
 
 def count_mandats_par_dep_cb(xml, result_dict):
     if xml.tag == "acteur":
-        idt = format_acteur(acteur_xml=xml)
+        idt = format_entity(xml)
         result_dict[idt] = len(ACTEUR_MANDATS(xml))
     return result_dict
 

@@ -90,3 +90,7 @@ ENV/
 
 # jetbrains
 .idea/
+
+#project
+
+out_dir/**
