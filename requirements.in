@@ -2,3 +2,4 @@ pip-tools
 cython
 lxml
 pyaml
+py2neo
