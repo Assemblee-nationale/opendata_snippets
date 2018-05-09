@@ -50,12 +50,19 @@ class EntityDescs:
                 uid = fragxml[0].text
                 entity_db[uid] = format_entity(fragxml, form_name=self.formating_form_name)
 
+    @staticmethod
+    def _get_file_map_from_uid(uid):
+        entity_map = [ value for key, value in EntityDescs.entity_file_map.items() if uid.startswith(key)]
+        if not entity_map:
+            return None, None
+        return entity_map
+        #
+
     def get_entity_from_memdb(self, uid, silent_fail=False):
         entity_db = self.entity_db
         ent = entity_db.get(uid)
         if ent is None:
-            entity_code = uid[:2]
-            element_name, src_file_name = self.entity_file_map.get(entity_code, (None, None))
+            element_name, src_file_name = EntityDescs._get_file_map_from_uid(uid)
             if element_name:
                 self.db_load(element_name, src_file_name)
             else:
